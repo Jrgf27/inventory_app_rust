@@ -16,7 +16,8 @@
         </div>
         <div class="modal-body">
           <form method="POST" hx-post="/htmx" hx-target="#categoryListing" hx-swap="beforebegin">
-
+            <input type="hidden" name="authenticity_token" value="{{authenticity_token}}"/>
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

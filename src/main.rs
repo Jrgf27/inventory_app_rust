@@ -1,10 +1,7 @@
 use axum::{
-    http::StatusCode,
-    response::Html,
     routing::{get, post},
-    Json, Router,
+    Router,
 };
-use serde::{Deserialize, Serialize};
 
 mod itemcategory;
 

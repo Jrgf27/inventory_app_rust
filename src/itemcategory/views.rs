@@ -1,11 +1,6 @@
 use tera::{Context, Tera};
 
-use axum::{
-    http::StatusCode,
-    response::Html,
-    routing::{get, post},
-    Json, Router,
-};
+use axum::{http::StatusCode, response::Html, Json};
 use serde::{Deserialize, Serialize};
 
 const CATEGORY_NAME: &str = "itemcategory";

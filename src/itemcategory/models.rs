@@ -72,7 +72,7 @@ impl ItemCategory {
                     Ok(generic_model) => match generic_model {
                         GenericModel::IntegerField(_value) => {
                             if field_name == "id" {
-                                ();
+                                continue;
                             } else {
                                 res += &format!("{} INTEGER NOT NULL,", field_name);
                             }
@@ -108,7 +108,7 @@ impl ItemCategory {
                 if let Value::Object(fields_payload) = &json_payload {
                     for (field_name_payload, field_value_payload) in fields_payload {
                         if field_name == "id" {
-                            ();
+                            continue;
                         } else if field_name_payload == &field_name {
                             res += &format!(" {},", &field_name);
 

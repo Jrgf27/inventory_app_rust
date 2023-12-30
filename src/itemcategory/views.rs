@@ -4,15 +4,8 @@ use tera::{Context, Tera};
 
 use crate::itemcategory::forms::ItemCategoryForm;
 use crate::itemcategory::models::db_insert_values;
-use axum::{
-    extract::Request,
-    http::{request, StatusCode},
-    response::Html,
-    response::IntoResponse,
-    Form, Json,
-};
+use axum::{response::Html, response::IntoResponse, Form};
 use axum_csrf::CsrfToken;
-use sqlx::Sqlite;
 
 const CATEGORY_NAME: &str = "itemcategory";
 

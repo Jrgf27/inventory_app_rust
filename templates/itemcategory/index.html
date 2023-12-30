@@ -17,6 +17,17 @@
         <div class="modal-body">
           <form method="POST" hx-post="/htmx" hx-target="#categoryListing" hx-swap="beforebegin">
             <input type="hidden" name="authenticity_token" value="{{authenticity_token}}"/>
+            <input type="hidden" name="id" value="0"/>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+              <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            
+            <div class="input-group">
+              <span class="input-group-text">With textarea</span>
+              <textarea name="description" class="form-control" aria-label="With textarea"></textarea>
+            </div>
             
         </div>
         <div class="modal-footer">

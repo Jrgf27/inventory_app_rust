@@ -6,6 +6,7 @@ use axum_csrf::CsrfConfig;
 use sqlx::{migrate::MigrateDatabase, Sqlite, SqlitePool};
 
 mod itemcategory;
+mod orm;
 
 pub const DB_URL: &str = "sqlite://sqlite.sqlite3";
 

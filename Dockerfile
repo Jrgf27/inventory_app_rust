@@ -1,8 +1,8 @@
 FROM rust:1.75 as build
 
 # create a new empty shell project
-RUN USER=root cargo new --bin inventory_app
-WORKDIR /inventory_app
+RUN USER=root cargo new --bin app
+WORKDIR /app
 
 # copy over your manifests
 COPY ./Cargo.lock ./Cargo.lock
@@ -16,15 +16,15 @@ RUN rm src/*.rs
 COPY ./src ./src
 
 # build for release
-RUN rm ./target/release/deps/inventory_app*
+RUN rm ./target/release/deps/app*
 RUN cargo build --release
 
 # our final base
 FROM rust:1.75
 
 # copy the build artifact from the build stage
-COPY --from=build /inventory_app/target/release/inventory_app .
+COPY --from=build /app/target/release/app .
 COPY ./templates ./templates
 
 # set the startup command to run your binary
-CMD ["./inventory_app"]
+CMD ["./app"]

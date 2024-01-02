@@ -11,7 +11,6 @@ const CATEGORY_NAME: &str = "itemcategory";
 
 pub async fn root(token: CsrfToken) -> impl IntoResponse {
     let token_unwraped = token.authenticity_token().unwrap();
-
     let tera = Tera::new("templates/**/*").unwrap();
 
     let mut context = Context::new();

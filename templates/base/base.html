@@ -66,14 +66,19 @@
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="nav-link dropdown-toggle" 
+                                hx-get="/dropdownhtmx"
+                                hx-trigger="click"
+                                hx-target="#search-results"
+                                hx-swap="outerHTML" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false">
                                         Projects
-                                </a>
+                                </button>
                                 <ul class="dropdown-menu">
-                                    
-                                    <li><a class="dropdown-item" href="#"></a></li>
-
-                                    <li id="projectListing"></li>
+                                    <div id="search-results">
+                                        <li><a class="dropdown-item" href="#"></a></li>
+                                    </div>
                                 </ul>
                             </li>
                                 

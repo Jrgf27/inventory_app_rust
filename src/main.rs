@@ -18,6 +18,7 @@ async fn main() {
         // `GET /` goes to `root`
         .route("/", get(itemcategory::views::root))
         .route("/htmx", post(itemcategory::views::htmx))
+        .route("/dropdownhtmx", get(itemcategory::views::root))
         .with_state(config);
 
     if !Sqlite::database_exists(DB_URL).await.unwrap_or(false) {

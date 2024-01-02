@@ -54,6 +54,9 @@
 <div style="width:100%; overflow:auto; max-height:500px;">
     <table class="table">
         <tbody>
+          {% for category in item_categories %}
+            {% include 'itemcategory/partials/table_row.html'  %}
+          {% endfor %}
         <tr id="categoryListing"></tr>
         </tbody>
     </table>

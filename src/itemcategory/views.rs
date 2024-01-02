@@ -3,7 +3,7 @@ use core::panic;
 use tera::{Context, Tera};
 
 use crate::itemcategory::forms::ItemCategoryForm;
-use crate::itemcategory::models::db_insert_values;
+use crate::itemcategory::models::{db_get_all, db_insert_values};
 use axum::{response::Html, response::IntoResponse, Form};
 use axum_csrf::CsrfToken;
 
@@ -17,6 +17,9 @@ pub async fn root(token: CsrfToken) -> impl IntoResponse {
     let mut context = Context::new();
     context.insert("authenticity_token", &token_unwraped);
 
+    let item_categories = db_get_all().await;
+
+    context.insert("item_categories", &item_categories);
     let output = tera.render(&(CATEGORY_NAME.to_string() + "/index.html"), &context);
 
     let render: Html<String> = Html(output.unwrap());

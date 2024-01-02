@@ -9,7 +9,9 @@ pub enum GenericModel {
 
 pub trait ModelMethods: Serialize {
     fn model_name(&self) -> String {
-        stringify!(self).to_string()
+        let model = std::any::type_name::<Self>().to_string();
+        let model_split = model.split("::");
+        model_split.last().unwrap().to_string()
     }
 
     fn db_init(&self) -> String {
@@ -89,5 +91,15 @@ pub trait ModelMethods: Serialize {
         res += ");";
 
         res
+    }
+
+    fn return_last_id(&self) -> String {
+        let model_name = self.model_name();
+        format!("SELECT id FROM {} ORDER BY id DESC LIMIT 1", &model_name)
+    }
+
+    fn db_get_all(&self) -> String {
+        let model_name = self.model_name();
+        format!("SELECT * FROM {}", &model_name)
     }
 }

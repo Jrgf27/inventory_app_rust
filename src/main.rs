@@ -16,9 +16,9 @@ async fn main() {
 
     let app = Router::new()
         // `GET /` goes to `root`
-        .route("/", get(itemcategory::views::root))
-        .route("/htmx", post(itemcategory::views::htmx))
-        .route("/dropdownhtmx", get(itemcategory::views::root))
+        .route("/", get(itemcategory::views::list))
+        .route("/", post(itemcategory::views::create))
+        .route("/dropdownhtmx", get(itemcategory::views::list))
         .with_state(config);
 
     if !Sqlite::database_exists(DB_URL).await.unwrap_or(false) {

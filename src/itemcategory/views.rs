@@ -3,20 +3,20 @@ use core::panic;
 use tera::{Context, Tera};
 
 use crate::itemcategory::forms::ItemCategoryForm;
-use crate::itemcategory::models::{db_get_all, db_insert_values};
+use crate::itemcategory::models::{db_insert_values, db_retrieve_all};
 use axum::{response::Html, response::IntoResponse, Form};
 use axum_csrf::CsrfToken;
 
 const CATEGORY_NAME: &str = "itemcategory";
 
-pub async fn root(token: CsrfToken) -> impl IntoResponse {
+pub async fn list(token: CsrfToken) -> impl IntoResponse {
     let token_unwraped = token.authenticity_token().unwrap();
     let tera = Tera::new("templates/**/*").unwrap();
 
     let mut context = Context::new();
     context.insert("authenticity_token", &token_unwraped);
 
-    let item_categories = db_get_all().await;
+    let item_categories = db_retrieve_all().await;
 
     context.insert("item_categories", &item_categories);
     let output = tera.render(&(CATEGORY_NAME.to_string() + "/index.html"), &context);
@@ -26,7 +26,7 @@ pub async fn root(token: CsrfToken) -> impl IntoResponse {
     (token, render).into_response()
 }
 
-pub async fn htmx(token: CsrfToken, Form(payload): Form<ItemCategoryForm>) -> Html<String> {
+pub async fn create(token: CsrfToken, Form(payload): Form<ItemCategoryForm>) -> Html<String> {
     if token.verify(&payload.authenticity_token).is_err() {
         println!("Token Invalid");
         panic!()

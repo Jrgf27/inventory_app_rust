@@ -29,6 +29,14 @@ impl ItemCategory {
 
 impl ModelMethods for ItemCategory {}
 
+pub async fn db_init() {
+    let db: sqlx::Pool<Sqlite> = crate::db_connection().await;
+
+    let db_query = ItemCategory::new_default().db_init();
+
+    sqlx::query(&db_query).execute(&db).await.unwrap();
+}
+
 pub async fn db_insert_values(payload: &ItemCategoryForm) -> Result<i64, sqlx::Error> {
     let db: sqlx::Pool<Sqlite> = crate::db_connection().await;
 
@@ -45,21 +53,35 @@ pub async fn db_insert_values(payload: &ItemCategoryForm) -> Result<i64, sqlx::E
     Ok(id)
 }
 
-pub async fn db_init() {
+pub async fn db_retrieve_all() -> Vec<ItemCategoryData> {
     let db: sqlx::Pool<Sqlite> = crate::db_connection().await;
 
-    let db_query = ItemCategory::new_default().db_init();
-
-    sqlx::query(&db_query).execute(&db).await.unwrap();
-}
-
-pub async fn db_get_all() -> Vec<ItemCategoryData> {
-    let db: sqlx::Pool<Sqlite> = crate::db_connection().await;
-
-    let db_query = ItemCategory::new_default().db_get_all();
+    let db_query = ItemCategory::new_default().db_retrieve_all();
 
     sqlx::query_as::<_, ItemCategoryData>(&db_query)
         .fetch_all(&db)
+        .await
+        .unwrap()
+}
+
+pub async fn db_retrieve_by_id(id: i64) -> ItemCategoryData {
+    let db: sqlx::Pool<Sqlite> = crate::db_connection().await;
+
+    let db_query = ItemCategory::new_default().db_retrieve_by_id(id);
+
+    sqlx::query_as::<_, ItemCategoryData>(&db_query)
+        .fetch_one(&db)
+        .await
+        .unwrap()
+}
+
+pub async fn db_retrieve_by_field(field: &str, value: &str) -> ItemCategoryData {
+    let db: sqlx::Pool<Sqlite> = crate::db_connection().await;
+
+    let db_query = ItemCategory::new_default().db_retrieve_by_field(field, value);
+
+    sqlx::query_as::<_, ItemCategoryData>(&db_query)
+        .fetch_one(&db)
         .await
         .unwrap()
 }
